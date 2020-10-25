@@ -5,7 +5,7 @@ pipeline {
     }
     agent {
         node {
-            label 'nodejs'
+            label 'node'
         }
     }
 
@@ -66,7 +66,7 @@ pipeline {
                 echo '### Creating a new app in DEV env ###'
                 sh '''
                         oc project ${DEV_PROJECT}
-                        oc new-app --as-deployment-config --name books nodejs:12~${APP_GIT_URL} \
+                        oc new-app --name books nodejs:12~${APP_GIT_URL} \
                         --context-dir ${APP_NAME}
 
                         oc expose svc/${APP_NAME}
@@ -130,9 +130,10 @@ pipeline {
                 echo '### Creating a new app in Staging ###'
                 sh '''
                     oc project ${STAGE_PROJECT}
-                    oc new-app --as-deployment-config --name books -i books:stage
+                    oc new-app --name books -i books:stage
                     oc expose svc/${APP_NAME}
-                '''            }
+                '''            
+            }
         }
 
         stage('Wait for deployment in Staging') {
