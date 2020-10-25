@@ -23,6 +23,13 @@ pipeline {
 
     stages {
 
+        stage('Print oc version') {
+            steps {
+                echo '### Printing oc version ###'
+                sh 'oc version'
+            }
+        }
+
         stage('NPM Install') {
             steps {
                 echo '### Installing NPM dependencies ###'
